@@ -1,0 +1,365 @@
+@import "tailwindcss";
+
+/* ======================================
+   DESIGN TOKENS
+   ====================================== */
+
+:root {
+  --background: #faf8f4;
+  --foreground: #111111;
+  --surface: #ffffff;
+  --surface-soft: #f5f2eb;
+  --primary: #f2be2f;
+  --primary-strong: #c99608;
+  --accent: #1d2730;
+  --ink-muted: #6b6560;
+  --border-soft: rgba(17, 17, 17, 0.07);
+  --shadow-soft: 0 24px 60px rgba(17, 17, 17, 0.1);
+  --shadow-card: 0 12px 40px rgba(17, 17, 17, 0.06);
+  --radius-card: 1.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ======================================
+   RESET & BASE
+   ====================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--background);
+  background-image:
+    linear-gradient(rgba(17, 17, 17, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: rgba(242, 190, 47, 0.3);
+}
+
+/* ======================================
+   67% DESKTOP SCALE
+   Wraps the entire page in a zoom-out
+   effect on large screens without
+   breaking scroll or layout.
+   ====================================== */
+
+@media (min-width: 1024px) {
+  body {
+    zoom: 0.67;
+  }
+}
+
+/* ======================================
+   SCROLLBAR
+   ====================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(17, 17, 17, 0.15);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(17, 17, 17, 0.25);
+}
+
+/* ======================================
+   FOCUS
+   ====================================== */
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ======================================
+   ANIMATIONS
+   ====================================== */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(6px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ======================================
+   REVEAL UTILITIES
+   ====================================== */
+
+.reveal-up {
+  animation: fade-up 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.reveal-fade {
+  animation: fade-in 700ms ease-out both;
+}
+
+.reveal-scale {
+  animation: fade-scale 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.reveal-left {
+  animation: slide-in-left 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.float-subtle {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Animation delays */
+.delay-1 { animation-delay: 120ms; }
+.delay-2 { animation-delay: 240ms; }
+.delay-3 { animation-delay: 360ms; }
+.delay-4 { animation-delay: 480ms; }
+.delay-5 { animation-delay: 600ms; }
+
+/* Stagger children */
+.stagger-up > * {
+  opacity: 0;
+  animation: fade-up 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.stagger-up > *:nth-child(1) { animation-delay:  80ms; }
+.stagger-up > *:nth-child(2) { animation-delay: 160ms; }
+.stagger-up > *:nth-child(3) { animation-delay: 240ms; }
+.stagger-up > *:nth-child(4) { animation-delay: 320ms; }
+.stagger-up > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-up > *:nth-child(6) { animation-delay: 480ms; }
+
+/* ======================================
+   MARQUEE
+   ====================================== */
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+/* ======================================
+   CARDS
+   ====================================== */
+
+/* Article / project card */
+.article-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 32px 64px rgba(17, 17, 17, 0.12);
+}
+
+/* Shimmer overlay on article card hover */
+.project-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(242, 190, 47, 0.08) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.article-card:hover .project-card-overlay {
+  opacity: 1;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Service card */
+.service-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(242, 190, 47, 0.08), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 56px rgba(17, 17, 17, 0.1);
+  border-color: rgba(242, 190, 47, 0.25);
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+/* ======================================
+   ARROW BUTTON
+   ====================================== */
+
+.arrow-animated {
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arrow-animated:hover {
+  background: var(--primary);
+  color: #1f1a10;
+  border-color: var(--primary);
+  box-shadow: 0 8px 24px rgba(242, 190, 47, 0.35);
+  transform: scale(1.1);
+}
+
+.arrow-animated:hover span,
+.arrow-animated:hover svg {
+  animation: arrow-bounce 0.8s ease-in-out infinite;
+}
+
+/* ======================================
+   TAG PILL
+   ====================================== */
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ======================================
+   GLASS UTILITIES
+   ====================================== */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(17, 17, 17, 0.06);
+}
+
+/* ======================================
+   SECTION DIVIDER
+   ====================================== */
+
+.section-divider {
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
