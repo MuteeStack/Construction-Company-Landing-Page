@@ -8,6 +8,8 @@
 
 A modern, responsive website built with Next.js, React, and Tailwind CSS for a professional construction company.
 
+**🚀 Live Demo:** [https://building-construction-co.vercel.app/](https://building-construction-co.vercel.app/)
+
 ---
 
 ## Features
@@ -108,16 +110,6 @@ Use ESLint to check code quality:
 ```bash
 npm run lint
 ```
-
----
-
-## Deployment
-
-| Component | Platform | Notes |
-| --- | --- | --- |
-| Frontend | Vercel (Recommended) | Push to GitHub & Connect to Vercel |
-
-See the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for other hosting options.
 
 ---
 
